@@ -9,10 +9,6 @@ const BookModel = sequelize.define('Book', {
         type: DataTypes.STRING,
         allowNull: false
     },
-    genre: {
-        type: DataTypes.STRING,
-        allowNull: false
-    },
     available: {
         type: DataTypes.BOOLEAN,
         allowNull: false,

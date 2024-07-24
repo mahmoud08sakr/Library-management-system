@@ -8,19 +8,19 @@ export const getAllBooks = async (req, res) => {
 }
 
 export const addBook = async (req, res) => {
-    const { title, author, genre } = req.body;
-    if (!title || !author || !genre) {
-        res.json({ success: false, message: 'title, author, and genre are required' });
+    const { title, author } = req.body;
+    if (!title || !author) {
+        res.json({ success: false, message: 'title, authore are required' });
         return;
     }
-    let book = await BookModel.create({ title, author, genre });
+    let book = await BookModel.create({ title, author });
     res.json({ success: true, message: 'book added successfully', book });
 }
 
 export const updateBook = async (req, res) => {
-    const { title, author, genre } = req.body;
-    if (!title || !author || !genre) {
-        res.json({ success: false, message: 'title, author, and genre are required' });
+    const { title, author } = req.body;
+    if (!title || !author ) {
+        res.json({ success: false, message: 'title, author are required' });
         return;
     }
     let book = await BookModel.findByPk(req.params.id);
@@ -28,7 +28,7 @@ export const updateBook = async (req, res) => {
         res.json({ success: false, message: 'book not found' });
         return;
     }
-    await book.update({ title, author, genre });
+    await book.update({ title, author });
     res.json({ success: true, message: 'book updated successfully', book });
 }
 
@@ -46,12 +46,11 @@ export const listBooks = async (req, res) => {
     res.json({ success: true, books });
 }
 export const searchBooks = async (req, res) => {
-    const { title, author, genre } = req.query;
+    const { title, author } = req.query;
     let books = await BookModel.findAll({
         where: {
             title: { [Op.like]: `%${title}%` },
-            author: { [Op.like]: `%${author}%` },
-            genre: { [Op.like]: `%${genre}%` }
+            author: { [Op.like]: `%${author}%` }
         }
     });
     res.json({ success: true, books });
